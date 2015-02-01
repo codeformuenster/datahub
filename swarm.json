@@ -1,0 +1,72 @@
+{
+  "app_name": "datahub",
+  "services": [{
+    "service_name": "datastore",
+    "components": [{
+      "component_name": "logstash",
+      "image": "webwurst/logstash",
+      "ports": [
+        "7001/tcp"
+      ],
+      "dependencies": [{
+        "name": "elasticsearch",
+        "port": 9200
+      }],
+      "domains": {
+        "logstash-7001-$user.gigantic.io": "7001"
+      }
+    }, {
+      "component_name": "elasticsearch",
+      "image": "webwurst/elasticsearch",
+      "volumes": [{
+        "path": "/var/lib/elasticsearch/data",
+        "size": "8 GB"
+      }],
+      "ports": [
+        "9200/tcp"
+      ],
+      "domains": {
+        "elasticsearch-$user.gigantic.io": "9200"
+      }
+    }, {
+      "component_name": "kibana",
+      "image": "webwurst/kibana",
+      "ports": [
+        "5601/tcp"
+      ],
+      "dependencies": [{
+        "name": "elasticsearch",
+        "port": 9200
+      }],
+      "domains": {
+        "kibana-$user.gigantic.io": "5601"
+      }
+    }]
+  }, {
+    "service_name": "parkleitsystem",
+    "components": [{
+      "component_name": "api",
+      "image": "webwurst/parkleitsystem-api",
+      "ports": [
+        "8080/tcp"
+      ],
+      "domains": {
+        "parkleitsystem-api-$user.gigantic.io": "8080"
+      }
+    }, {
+      "component_name": "go-cron",
+      "image": "webwurst/go-cron",
+      "env": {
+        "SCHEDULE": "@every 1m",
+        "COMMAND": "curl -sS api:8080 | nc logstash 7001"
+      },
+      "dependencies": [{
+        "name": "api",
+        "port": 8080
+      }, {
+        "name": "datastore/logstash",
+        "port": 7001
+      }]
+    }]
+  }]
+}
