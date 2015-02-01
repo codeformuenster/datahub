@@ -68,5 +68,33 @@
         "port": 7001
       }]
     }]
+  }, {
+    "service_name": "buergerbuero",
+    "components": [{
+      "component_name": "go-cron",
+      "image": "webwurst/go-cron",
+      "env": {
+        "SCHEDULE": "@every 1m",
+        "COMMAND": "echo -e `curl -sS buergerbuero.codeformuenster.org/latest` | nc logstash 7001"
+      },
+      "dependencies": [{
+        "name": "datastore/logstash",
+        "port": 7001
+      }]
+    }]
+  }, {
+    "service_name": "openweathermap",
+    "components": [{
+      "component_name": "go-cron",
+      "image": "webwurst/go-cron",
+      "env": {
+        "SCHEDULE": "@every 1m",
+        "COMMAND": "echo -e `curl -sS api.openweathermap.org/data/2.5/weather?id=2867543` | nc logstash 7001"
+      },
+      "dependencies": [{
+        "name": "datastore/logstash",
+        "port": 7001
+      }]
+    }]
   }]
 }
