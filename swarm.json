@@ -11,15 +11,12 @@
       "dependencies": [{
         "name": "elasticsearch",
         "port": 9200
-      }],
-      "domains": {
-        "logstash-7001-$user.gigantic.io": "7001"
-      }
+      }]
     }, {
       "component_name": "elasticsearch",
-      "image": "webwurst/elasticsearch",
+      "image": "elasticsearch",
       "volumes": [{
-        "path": "/var/lib/elasticsearch/data",
+        "path": "/usr/share/elasticsearch/data",
         "size": "8 GB"
       }],
       "ports": [
@@ -28,14 +25,17 @@
       "domains": {
         "elasticsearch-$user.gigantic.io": "9200"
       }
-    }, {
+    }]
+  }, {
+    "service_name": "kibana",
+    "components": [{
       "component_name": "kibana",
       "image": "webwurst/kibana",
       "ports": [
         "5601/tcp"
       ],
       "dependencies": [{
-        "name": "elasticsearch",
+        "name": "datastore/elasticsearch",
         "port": 9200
       }],
       "domains": {
@@ -75,7 +75,7 @@
       "image": "webwurst/go-cron",
       "env": {
         "SCHEDULE": "@every 1m",
-        "COMMAND": "echo -e `curl -sS buergerbuero.codeformuenster.org/latest` | nc logstash 7001"
+        "COMMAND": "curl -w '\n' -sS buergerbuero.codeformuenster.org/latest | nc logstash 7001"
       },
       "dependencies": [{
         "name": "datastore/logstash",
@@ -89,7 +89,7 @@
       "image": "webwurst/go-cron",
       "env": {
         "SCHEDULE": "@every 1m",
-        "COMMAND": "echo -e `curl -sS api.openweathermap.org/data/2.5/weather?id=2867543` | nc logstash 7001"
+        "COMMAND": "curl -w '\n' -sS api.openweathermap.org/data/2.5/weather?id=2867543 | nc logstash 7001"
       },
       "dependencies": [{
         "name": "datastore/logstash",
