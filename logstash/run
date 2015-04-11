@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+cd `dirname $0`
+source output-elasticsearch.conf.env > conf/output-elasticsearch.conf
+exec logstash agent -f conf

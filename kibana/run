@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+cd `dirname $0`
+source kibana.yml.env > /opt/kibana/config/kibana.yml
+exec /opt/kibana/bin/kibana
