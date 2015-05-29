@@ -1,10 +1,10 @@
 logstash:
-  image: logstash
-  command: /logstash/run
+  image: logstash:1.5
+  command: logstash -f /logstash/conf/*.conf
   ports:
     - "7001:7001"
   volumes:
-      - logstash:/logstash
+    - logstash:/logstash
   links:
     - elasticsearch
 
@@ -16,11 +16,8 @@ elasticsearch:
     - "9200:9200"
 
 kibana:
-  image: local/kibana
-  command: /kibana/run
+  image: webwurst/kibana
   ports:
     - "5601:5601"
-  volumes:
-      - kibana:/kibana    
   links:
     - elasticsearch
