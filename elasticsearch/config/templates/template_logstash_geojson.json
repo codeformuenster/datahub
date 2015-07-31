@@ -1,0 +1,33 @@
+{
+  "template_logstash_geojson": {
+    "template": "logstash-*",
+    "mappings": {
+      "_default_": {
+        "properties": {
+          "location.geo_shape": {
+            "type": "geo_shape",
+            "tree": "quadtree",
+            "precision": "1m"
+          },
+          "geo_point": {
+            "type": "geo_point",
+            "geohash_precision": "1m"
+          },
+          "geo_point_geocoder": {
+            "type": "geo_point",
+            "geohash_precision": "1m"
+          },
+          "geojson_feature": {
+            "properties" : {
+              "geometry": {
+                "type": "geo_shape",
+                "tree": "quadtree",
+                "precision": "1m"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,22 +1,21 @@
 logstash:
-  image: logstash:1.5
-  command: logstash -f /logstash/conf/*.conf
+  build: logstash/
+  # image: codeformuenster/dh_logstash
   ports:
     - "7001:7001"
-  volumes:
-    - logstash:/logstash
   links:
     - elasticsearch
 
 elasticsearch:
-  image: elasticsearch:1.5
-  volumes:
-    - elasticsearch/data:/usr/share/elasticsearch/data
+  build: elasticsearch/
+  # image: codeformuenster/dh_elasticsearch
+  # volumes:
+  #   - elasticsearch/data:/usr/share/elasticsearch/data
   ports:
     - "9200:9200"
 
 kibana:
-  image: webwurst/kibana
+  image: kibana:4.1
   ports:
     - "5601:5601"
   links:
