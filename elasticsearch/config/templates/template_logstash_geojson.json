@@ -25,6 +25,15 @@
                 "precision": "1m"
               }
             }
+          },
+          "Feature": {
+            "properties" : {
+              "geometry": {
+                "type": "geo_shape",
+                "tree": "quadtree",
+                "precision": "1m"
+              }
+            }
           }
         }
       }

@@ -1,16 +1,16 @@
 logstash:
-  build: logstash/
-  # image: codeformuenster/dh_logstash
+  # build: logstash/
+  image: codeformuenster/datahub-logstash
   ports:
     - "7001:7001"
   links:
     - elasticsearch
 
 elasticsearch:
-  build: elasticsearch/
-  # image: codeformuenster/dh_elasticsearch
-  # volumes:
-  #   - elasticsearch/data:/usr/share/elasticsearch/data
+  # build: elasticsearch/
+  image: codeformuenster/datahub-elasticsearch
+  volumes:
+   - elasticsearch/data:/usr/share/elasticsearch/data
   ports:
     - "9200:9200"
 
