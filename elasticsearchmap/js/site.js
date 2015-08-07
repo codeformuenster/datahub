@@ -34,11 +34,15 @@ function init() {
     var bbox = event.target.getBounds();
     var northWest = bbox.getNorthWest();
     var southEast = bbox.getSouthEast();
-    var bboxQuery = {"query":{"geo_shape": {"geo_shape_geocoder": {"shape": {"type": "envelope","coordinates": [[northWest.lng, northWest.lat],[southEast.lng, southEast.lat]]}}}}};
+    var bboxQuery = {"query":{"geo_shape": {"geometry": {"shape": {"type": "envelope","coordinates": [[northWest.lng, northWest.lat],[southEast.lng, southEast.lat]]}}}}};
     query(bboxQuery, function (hits) {
       resultsLayer.clearLayers();
       hits.forEach(function (hit) {
-        resultsLayer.addLayer(new L.Marker(hit._source.geo_point_geocoder.reverse()));
+        console.log(hit);
+        // resultsLayer.addLayer(new L.Marker(hit._source.geometry.reverse()));
+        if (hit._source.geometry.type == "Polygon") {
+          resultsLayer.addLayer(new L.polygon(hit._source.geometry.coordinates));          
+        }
       }, this);
 
     });
