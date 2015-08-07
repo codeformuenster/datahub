@@ -1,0 +1,13 @@
+{
+  "name": "elasticsearchmap",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "elasticsearch": "~5.0.0",
+  }
+}
