@@ -34,6 +34,11 @@
                 "precision": "1m"
               }
             }
+          },
+          "geometry": {
+            "type": "geo_shape",
+            "tree": "quadtree",
+            "precision": "1m"
           }
         }
       }
