@@ -1,5 +1,3 @@
-L.Icon.Default.imagePath = "images"
-
 function init() {
 
   // initialize map object with view
@@ -27,6 +25,7 @@ function init() {
       console.error('elasticsearch cluster is down!');
     } else {
       console.log('All is well');
+      queryElasticWithBBox({target: map});
     }
   });
 
@@ -37,14 +36,8 @@ function init() {
     var bboxQuery = {"query":{"geo_shape": {"geometry": {"shape": {"type": "envelope","coordinates": [[northWest.lng, northWest.lat],[southEast.lng, southEast.lat]]}}}}};
     query(bboxQuery, function (hits) {
       resultsLayer.clearLayers();
-      hits.forEach(function (hit) {
-        console.log(hit);
-        // resultsLayer.addLayer(new L.Marker(hit._source.geometry.reverse()));
-        if (hit._source.geometry.type == "Polygon") {
-          resultsLayer.addLayer(new L.polygon(hit._source.geometry.coordinates));          
-        }
-      }, this);
-
+      var only_polygons = hits.filter(function (h) { return h._source.geometry.type === "Polygon"; });
+      resultsLayer.addLayer(L.geoJson(only_polygons.map(function(hit) { return hit._source; })));
     });
   };
 
