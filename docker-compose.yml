@@ -1,22 +1,29 @@
-logstash:
-  # build: logstash/
-  image: codeformuenster/datahub-logstash
-  ports:
-    - "7001:7001"
-  links:
-    - elasticsearch
+# logstash:
+#   # build: logstash/
+#   image: codeformuenster/datahub-logstash
+#   ports:
+#     - "7001:7001"
+#   links:
+#     - elasticsearch
+#
+# elasticsearch:
+#   # build: elasticsearch/
+#   image: codeformuenster/datahub-elasticsearch
+#   volumes:
+#    - elasticsearch/data:/usr/share/elasticsearch/data
+#   ports:
+#     - "9200:9200"
+#
+# kibana:
+#   image: kibana:4.1
+#   ports:
+#     - "5601:5601"
+#   links:
+#     - elasticsearch
 
-elasticsearch:
-  # build: elasticsearch/
-  image: codeformuenster/datahub-elasticsearch
+map:
+  image: nginx
   volumes:
-   - elasticsearch/data:/usr/share/elasticsearch/data
+    - elasticsearchmap:/usr/share/nginx/html
   ports:
-    - "9200:9200"
-
-kibana:
-  image: kibana:4.1
-  ports:
-    - "5601:5601"
-  links:
-    - elasticsearch
+    - "6080:80"
