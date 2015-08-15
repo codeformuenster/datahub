@@ -37,7 +37,22 @@ function init() {
     query(bboxQuery, function (hits) {
       resultsLayer.clearLayers();
       var only_polygons = hits.filter(function (h) { return h._source.geometry.type === "Polygon"; });
+      // console.log(only_polygons)
       resultsLayer.addLayer(L.geoJson(only_polygons.map(function(hit) { return hit._source; })));
+
+      var only_points = hits.filter(function (h) { return h._source.geometry.type === "Point" && h._source.geometry.coordinates[0] != null; });
+      // console.log(only_points)
+      // resultsLayer.addLayer(L.geoJson(only_points.map(function(hit) { return hit._source; })));
+      for (p of only_points) {
+        // console.log(p._source.geometry.coordinates)
+        coord = [Number(p._source.geometry.coordinates[1]), Number(p._source.geometry.coordinates[0])];
+        console.log(coord);
+
+        // resultsLayer.addLayer(L.marker(p._source.geometry.coordinates));
+        resultsLayer.addLayer(L.marker(coord));
+      }
+      // resultsLayer.addLayer(L.marker(only_points.map(function(hit) { return hit._source.geometry.coordinates; })));
+      // L.marker([51.5, -0.09]).addTo(map);
     });
   };
 
