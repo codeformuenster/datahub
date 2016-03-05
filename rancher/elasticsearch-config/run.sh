@@ -14,9 +14,9 @@ if [ -f "$PLUGIN_TXT" ]; then
   done
 fi
 
-# Change the ownership of /usr/share/elasticsearch/data to elasticsearch
+# Change the ownership of /usr/share/elasticsearch/ to elasticsearch
 set -ex \
-  && cd /usr/share/elasticsearch/config/ \
+  && cd /usr/share/elasticsearch/ \
   && for path in \
     ./data \
     ./logs \
