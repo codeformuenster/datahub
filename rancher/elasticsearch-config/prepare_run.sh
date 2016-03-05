@@ -15,6 +15,7 @@ if [ -f "$PLUGIN_TXT" ]; then
 fi
 
 set -ex \
+  && cd /usr/share/elasticsearch/config/ \
   && for path in \
     ./data \
     ./logs \
