@@ -1,6 +1,7 @@
 {{range ls "/self/service/metadata/elasticsearch/yml"}}
 {{.}}: {{getv (printf "/self/service/metadata/elasticsearch/yml/%s" .)}}{{end}}
 
+network.host: 0.0.0.0
 bootstrap.mlockall: true
 
 {{with get "/self/service/name"}}{{if eq "elasticsearch" .Value}}
