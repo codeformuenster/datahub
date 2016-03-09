@@ -1,0 +1,14 @@
+elasticsearch:
+  scale: 3
+
+elasticsearch-config:
+  scale: 3
+
+elasticsearch-data:
+  scale: 3
+
+kibana:
+  scale: 1
+
+kopf:
+  scale: 1

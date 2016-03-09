@@ -8,15 +8,8 @@ while [ ! -f "/usr/share/elasticsearch/config/elasticsearch.yml" ]; do
   sleep 1
 done
 
-if [ -f "$PLUGIN_TXT" ]; then
-  for plugin in $(<"${PLUGIN_TXT}"); do
-    /usr/share/elasticsearch/bin/plugin --install $plugin
-  done
-fi
-
-# Change the ownership of /usr/share/elasticsearch/ to elasticsearch
 set -ex \
-  && cd /usr/share/elasticsearch/ \
+  && cd /usr/share/elasticsearch \
   && for path in \
     ./data \
     ./logs \
@@ -26,5 +19,11 @@ set -ex \
     mkdir -p "$path"; \
     chown -R elasticsearch:elasticsearch "$path"; \
   done
+
+if [ -f "$PLUGIN_TXT" ]; then
+  for plugin in $(<"${PLUGIN_TXT}"); do
+    /usr/share/elasticsearch/bin/plugin --install $plugin
+  done
+fi
 
 exec /docker-entrypoint.sh elasticsearch
