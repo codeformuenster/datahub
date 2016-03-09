@@ -6,6 +6,7 @@ FROM alpine
 COPY ./etc/logstash /etc/
 
 # VOLUME /opt/rancher/bin
-VOLUME /usr/share/elasticsearch/config
+VOLUME /etc/logstash
 
 # CMD ["confd", "-backend", "rancher", "-prefix", "/2015-12-19"]
+CMD ["/bin/true"]
