@@ -3,7 +3,7 @@ FROM alpine
 
 # COPY ./etc/confd /etc/confd
 # COPY ./run.sh /opt/rancher/bin/
-COPY ./etc/logstash /etc/
+COPY ./etc/logstash /etc/logstash
 
 # VOLUME /opt/rancher/bin
 VOLUME /etc/logstash
